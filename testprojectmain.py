@@ -68,31 +68,31 @@ class Student:
                         "Math":self.filtering_score("Math")
                     }
                 })
-            else:
-                print("dar list 0 ha rad shodi!")
-                Student.zero.append(self.name)
 
 
 class Moadel(Student):
-    def moadel(self,*dars):
+    def moadel(self):
+        if self.name in Student.zero:
+            print("Nemitooni moadeleto neshoon bedi")
+            return
         if self.name in Student.list_ok:
-            x= 0
-            for i in dars:
-                x+=i
-            moaadel = (x
-            ) / len(dars)
-
+            dars = (
+                Student.dict_ok[self.name]["Math"],
+                Student.dict_ok[self.name]["Art"],
+                Student.dict_ok[self.name]["Music"]
+            )
+            moaadel = sum(dars) / len(dars)
             if moaadel >= 18:
                 Student.dict_moadel[self.name] = moaadel
-                print("You are so GREAT!")
+                print("aalii ")
             elif 10 <= moaadel < 18:
                 Student.dict_moadel[self.name] = moaadel
-                print("Not Bad")
+                print("bad nabood ")
             else:
                 Student.dict_moadel[self.name] = moaadel
-                print("Soooo Bad")
+                print("kheili bad bood")
         elif self.name in Student.list_lost:
-            print("Faghat nomrei dars riazi baray shoma dar nazar gerefte mishe")
+            print("Faghat nomrei dars riazi baray shoma dar nazar gerefte mishe ba zaribi behtar!!!")
             moadel1 = (Student.dict_lost[self.name]["Math"] * 2) / 3
             Student.dict_moadel[self.name] = moadel1
             (print("Bad nabood ") or Student.graduated_list.append(self.name)) if moadel1 >= 12 else print("kheyli eftezah bood")
