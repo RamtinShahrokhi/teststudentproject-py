@@ -3,7 +3,7 @@ import random as rn
 class Student:
     dict_ok = {}
     dict_lost = {}
-    student_codes = {}
+    student_codes_random = {}
     dict_moadel = {}
     dict2_moadel = {}
     faild_list = []
@@ -95,40 +95,62 @@ class Moadel(Student):
             print("Faghat nomrei dars riazi baray shoma dar nazar gerefte mishe ba zaribi behtar!!!")
             moadel1 = (Student.dict_lost[self.name]["Math"] * 2) / 3
             Student.dict_moadel[self.name] = moadel1
-            (print("Bad nabood ") or Student.graduated_list.append(self.name)) if moadel1 >= 12 else print("kheyli eftezah bood")
+            print("Bad nabood") if moadel1 >= 12 else print("kheyli eftezah bood")
+            Student.dict_lost[self.name]["Moadel"] = moadel1
         else : 
             print("kheili bade")
     def ghaboli(self):
-        if sum(Student.dict_ok[self.name].values()) / len(Student.dict_ok[self.name]) >= 15:
-            print("You graduated")
-            Student.graduated_list.append(self.name)
-        else:
-            print("You Failed!")
+        if self.name in Student.zero:
+            print("rofoze shodi")
             Student.faild_list.append(self.name)
-            Student.faild_list.extend(Student.zero)
-
+            return
+        elif self.name in Student.list_ok:
+            if sum(Student.dict_ok[self.name].values()) / len(Student.dict_ok[self.name]) >= 15:
+                print("shoma farghol tahsil shodid")
+                Student.graduated_list.append(self.name)
+            else:
+                print("rofoze shodi")
+                Student.faild_list.append(self.name)
+        elif self.name in Student.list_lost:
+            if Student.dict_lost[self.name]["Moadel"]>=12 :
+                print("nomre riazi nejatet dad")
+                Student.graduated_list.append(self.name)
+            else:
+                print("rofoze shodi")
+                Student.faild_list.append(self.name)
+       
 
 
 class search(Student):
     def searching(self):
         while True:
             search_name = input("esmi ke nomaratesh ro mikhai bedooni begooo")
-            if search_name in Student.graduated_list:
+            if search_name in Student.dict_ok:
                 print(Student.dict_ok[search_name])
                 break
-            elif search_name in Student.faild_list:
+            elif search_name in Student.dict_lost:
                 print(Student.dict_lost[search_name])
                 break
-            else:
-                print("Student not found! Try again")
+            elif search_name in Student.zero:
+                print("in danesh amooz hich nomreii nadarad")
+                break
+            else : 
+                print("danesh amooz yaft nashod")
 
     def searching_sec(self):
-        for i in Student.graduated_list + Student.faild_list:
-            Student.student_codes[i] = rn.randint(1, 5)
+        f = open("Test_file.txt","w")
+        students = Student.graduated_list + Student.faild_list
+        count = rn.sample(range(1, 21), len(students))
+        count_zero = 0
+        for i in students:
+            Student.student_codes_random[i] = count[count_zero]
+            count_zero +=1
+
+
 
         while True:
             searching_want = int(input("enter number"))
-            for i, j in Student.student_codes.items():
+            for i, j in Student.student_codes_random.items():
                 if searching_want == j:
                     print(i)
                     break
