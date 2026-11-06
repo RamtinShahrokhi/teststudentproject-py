@@ -191,39 +191,34 @@ class search_save(Student):
 
 class edit(Student):
     def Editing(self):
-        cop_dict2 = Student.dict2_moadel.copy()
-
+  
         while True:
-            try:
-                entry = input("remove/edit? >>> ")
+            entry = input("remove/edit? > ")
 
-                if entry == "remove":
-                    print("which one do you want to remove ?")
+            if entry == "remove":
+                print("kodoom ro mikhai hazf koni ? ")
 
-                    for i in cop_dict2:
-                        print(i, self.cop_dict2[i])
+                for i in Student.dict2_moadel:
+                    print(i, Student.dict2_moadel[i])
 
-                    while True:
-                        entry2 = input(" Choose someone")
-                        try:
-                            cop_dict2.pop(entry2)
-                            return cop_dict2
-                        except KeyError:
-                            print("Try again!")
-                            break
+                while True:
+                    entry2 = input(" yeki ro entekhab kon > ")
+                    try:
+                        Student.dict2_moadel.pop(entry2)
+                        Student.student_codes_random.pop(entry2)
+                        return Student.dict2_moadel
+                    except KeyError:
+                        print("Try again!")
 
-                elif entry == "edit":
-                    for i in self.cop_dict2:
-                        print(i, cop_dict2[i])
+            elif entry == "edit":
+                for i in Student.dict2_moadel:
+                    print(i, Student.dict2_moadel[i])
 
-                    name1 = input("enter the name you want change his/her scores")
-                    if name1 in cop_dict2:
-                        student_name = Student(name1)
-                        student_name.take_exams()
-                        student_name.enter()
-                        student_name.sabt()
-                    else:
-                        print("student not found")
-
-            except:
-                pass
+                name1 = input("esmi ke mikhai edit koni ro vared kon > ")
+                if name1 in Student.dict2_moadel:
+                    student_name = Student(name1)
+                    student_name.take_exams()
+                    student_name.enter()
+                    student_name.sabt()
+                else:
+                    print("student peida nashod")
