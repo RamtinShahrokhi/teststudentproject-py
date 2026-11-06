@@ -204,8 +204,34 @@ class edit(Student):
                 while True:
                     entry2 = input(" yeki ro entekhab kon > ")
                     try:
-                        Student.dict2_moadel.pop(entry2)
-                        Student.student_codes_random.pop(entry2)
+                        if entry2 in Student.dict2_moadel:
+                            Student.dict2_moadel.pop(entry2)
+
+                        if entry2 in Student.student_codes_random:
+                            Student.student_codes_random.pop(entry2)
+
+                        if entry2 in Student.dict_moadel:
+                            Student.dict_moadel.pop(entry2)
+
+                        if entry2 in Student.dict_ok:
+                            Student.dict_ok.pop(entry2)
+
+                        elif entry2 in Student.dict_lost:
+                            Student.dict_lost.pop(entry2)
+                        if entry2 in Student.list_ok:
+                            Student.list_ok.remove(entry2)
+
+                        elif entry2 in Student.list_lost:
+                            Student.list_lost.remove(entry2)
+
+                        elif entry2 in Student.zero:
+                            Student.zero.remove(entry2)
+                        if entry2 in Student.graduated_list:
+                            Student.graduated_list.remove(entry2)
+
+                        if entry2 in Student.faild_list:
+                            Student.faild_list.remove(entry2)
+
                         return Student.dict2_moadel
                     except KeyError:
                         print("Try again!")
