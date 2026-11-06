@@ -6,6 +6,7 @@ class Student:
     student_codes_random = {}
     dict_moadel = {}
     dict2_moadel = {}
+    dict3_moadel = {}
     faild_list = []
     zero = []
     graduated_list = []
@@ -23,14 +24,21 @@ class Student:
         while True:
             try:
                 self.exams = int(input("chand ta emtehan tamoom kardi?"))
-                break
+                if self.exams >= 0 :
+                    break
+                else:
+                    print("Adad manfi ghabool nist")
             except ValueError:
                 print("Lotfan yek meghdar int bede")
 
     def enter(self):
         while True:
-            if 0 <= self.exams < 2:
-                print("emtehan haro bakhti!")
+            if self.exams == 0:
+                print("Hich emtehani ro tamoom nakardi ")
+                Student.zero.append(self.name)
+                break
+            elif self.exams == 1 :
+                print("bad nist")
                 Student.list_lost.append(self.name)
                 break
             elif self.exams >= 2 and self.exams < 4:
@@ -68,6 +76,8 @@ class Student:
                         "Math":self.filtering_score("Math")
                     }
                 })
+        else:
+            print("Shoma emtehani tamoom nakardin")
 
 
 class Moadel(Student):
@@ -121,62 +131,62 @@ class Moadel(Student):
        
 class sorting_moadel(Student):
     def sorting(self):
+
         for i in Student.dict_moadel:
             Student.list_sort.append([self.dict_moadel[i], i])
-
-
 
         Student.list_sort.sort()
 
         for j in self.list_sort:
-            Student.dict2_moadel[j[0]] = j[1]
+            Student.dict2_moadel[j[1]] = j[0]
 
         return Student.dict2_moadel
-
-
+            
 class search_save(Student):
-    def searching(self):
+    def random_searching(self):
         while True:
             search_name = input("esmi ke nomaratesh ro mikhai bedooni begooo")
-            if search_name in Student.dict_ok:
-                print(Student.dict_ok[search_name])
-                break
-            elif search_name in Student.dict_lost:
-                print(Student.dict_lost[search_name])
-                break
-            elif search_name in Student.zero:
-                print("in danesh amooz hich nomreii nadarad")
-                break
-            else : 
-                print("danesh amooz yaft nashod")
-
-    def searching_sec(self):
+            if search_name.startswith(" ") or search_name.endswith(" "):
+                    print("dobare esmi ra vared konid")
+            else:
+                if search_name in Student.dict_ok:
+                    print(Student.dict_ok[search_name])
+                    break
+                elif search_name in Student.dict_lost:
+                    print(Student.dict_lost[search_name])
+                    break
+                elif search_name in Student.zero:
+                    print("in danesh amooz hich nomreii nadarad")
+                    break
+                else : 
+                    print("danesh amooz yaft nashod")
+    def saving (self):
         students = Student.graduated_list + Student.faild_list
         count = rn.sample(range(1, 101), len(students))
         count_zero = 0
         for i in students:
             Student.student_codes_random[i] = count[count_zero]
             count_zero +=1
-    def saving (self):
         file_open_a = open("Student.txt","a")
-        file_close_a = file_open_a.close()
+        file_open_a.write("ESM DANESH AMOOZAN  + NOMRE + RANDOM CODE : ".center(130)+"\n\n\n")
 
-        file_open_a.write("ESM DANESH AMOOZAN  + NOMRE + RANDOM CODE : ".center(130))
-        file_open_a.write()
+        for num,(key,value) in enumerate(Student.dict2_moadel.items()):
+            file_open_a.write(f"{num} _ {key.upper()} : {value} , SHOMARE : {Student.student_codes_random[key]}"+"\n\n\n")
 
-
-
+        file_open_a.close()
+            
+    def searching_sec(self):
+        
         while True:
-            searching_want = int(input("enter number"))
-            for i, j in Student.student_codes_random.items():
-                if searching_want == j:
-                    print(i)
-                    break
-            else:
-                print("student not found ! try again")
-                continue
-            break
+                    searching_want = int(input("Ba tovajoh be file code danesh amooz ra vared konid"))
+                    for i, j in Student.student_codes_random.items():
+                        if searching_want == j:
+                            print(i)
+                            return
+                    else:
+                        print("danesh amooz peida nashod")
 
+        
 
 
 class edit(Student):
@@ -190,24 +200,24 @@ class edit(Student):
                 if entry == "remove":
                     print("which one do you want to remove ?")
 
-                    for i in self.cop_dict2:
+                    for i in cop_dict2:
                         print(i, self.cop_dict2[i])
 
                     while True:
                         entry2 = input(" Choose someone")
                         try:
-                            self.cop_dict2.pop(entry2)
-                            return self.cop_dict2
+                            cop_dict2.pop(entry2)
+                            return cop_dict2
                         except KeyError:
                             print("Try again!")
                             break
 
                 elif entry == "edit":
                     for i in self.cop_dict2:
-                        print(i, self.cop_dict2[i])
+                        print(i, cop_dict2[i])
 
                     name1 = input("enter the name you want change his/her scores")
-                    if name1 in self.cop_dict2:
+                    if name1 in cop_dict2:
                         student_name = Student(name1)
                         student_name.take_exams()
                         student_name.enter()
