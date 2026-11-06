@@ -119,9 +119,22 @@ class Moadel(Student):
                 print("rofoze shodi")
                 Student.faild_list.append(self.name)
        
+class sorting_moadel(Student):
+    def sorting(self):
+        for i in Student.dict_moadel:
+            Student.list_sort.append([self.dict_moadel[i], i])
 
 
-class search(Student):
+
+        Student.list_sort.sort()
+
+        for j in self.list_sort:
+            Student.dict2_moadel[j[0]] = j[1]
+
+        return Student.dict2_moadel
+
+
+class search_save(Student):
     def searching(self):
         while True:
             search_name = input("esmi ke nomaratesh ro mikhai bedooni begooo")
@@ -138,13 +151,18 @@ class search(Student):
                 print("danesh amooz yaft nashod")
 
     def searching_sec(self):
-        f = open("Test_file.txt","w")
         students = Student.graduated_list + Student.faild_list
-        count = rn.sample(range(1, 21), len(students))
+        count = rn.sample(range(1, 101), len(students))
         count_zero = 0
         for i in students:
             Student.student_codes_random[i] = count[count_zero]
             count_zero +=1
+    def saving (self):
+        file_open_a = open("Student.txt","a")
+        file_close_a = file_open_a.close()
+
+        file_open_a.write("ESM DANESH AMOOZAN  + NOMRE + RANDOM CODE : ".center(130))
+        file_open_a.write()
 
 
 
@@ -159,20 +177,6 @@ class search(Student):
                 continue
             break
 
-
-class sorting_moadel(Student):
-    def sorting(self):
-        for i in Student.dict_moadel:
-            Student.list_sort.append([self.dict_moadel[i], i])
-
-
-
-        Student.list_sort.sort()
-
-        for j in self.list_sort:
-            Student.dict2_moadel[j[0]] = j[1]
-
-        return Student.dict2_moadel
 
 
 class edit(Student):
